@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+<div class="main-container">
+    <table class="table table-striped table-hover" style="text-align: center; margin-top: 35px;">
+        <thead>
+        <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Длительность</th>
+            <th scope="col">Дата появления</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for el in product_info %}
+        <tr>
+            <td><a href="#">{{ el.name }}</a></td>
+            <td>{{ el.price }}</td>
+            <td>{{ el.duration_of_action }}</td>
+            <td>{{ el.appearance_date }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
