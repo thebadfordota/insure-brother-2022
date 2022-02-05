@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home_page, ProductListView
+from .views import ProductListView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 app_name = 'main'
