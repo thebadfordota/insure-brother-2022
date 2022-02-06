@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+<h2>{{ heading }}</h2>
+<div class="main_welcome">
+    <table class="table table-striped table-hover" style="text-align: center; margin-top: 35px;">
+        <thead>
+        <tr>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Телефон</th>
+            <th scope="col">Почта</th>
+            <th scope="col">Отправлено</th>
+            <th scope="col">Продукт</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for el in message_info %}
+        <tr>
+            <td>{{ el.last_name }}</td>
+            <td>{{ el.first_name }}</td>
+            <td>{{ el.patronymic }}</td>
+            <td>{{ el.phone }}</td>
+            <td>{{ el.email }}</td>
+            <td>{{ el.appearance_date }}</td>
+            <td>{{ el.product_key }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+<h2>{{ heading }}</h2>
+<div class="main_welcome">
+    <div class="main_center">
+        <div class="about_left" style="margin: auto; margin-top: 0; margin-right: 150px; ">
+            <img src='{% static "main/images/insurance-default-image.jpg" %}'
+                 style="width: 250px; height: 250px; border-radius: 50%;">
+        </div>
+        <div class="about_right">
+            <div class="profile_info">
+                <div class="scroll_table">
+                    <table class="table table-striped table-hover" style="text-align: center; margin-top: 35px;">
+                        <tbody>
+                        <tr>
+                            <td>Название:</td>
+                            <td>{{ product_info.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Цена:</td>
+                            <td>{{ product_info.price }}</td>
+                        </tr>
+                        <tr>
+                            <td>Длительность:</td>
+                            <td>{{ product_info.duration_of_action }}</td>
+                        </tr>
+                        <tr>
+                            <td>Компания:</td>
+                            <td>{{ product_info.company_key }}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-success" style="color: white; width: 135px; height: 60px;
+margin-top: 20px;" onclick="window.location.href='{% url 'main:create_message' product_info.pk %}'">Оставить заявку
+                                </button>
+                            </td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>О продукте:</h3>
+    <p style="text-align: center;">{{ product_info.about_product }}</p>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+<div class="main_welcome">
+    <h2>Профиль {{ user.username }}</h2>
+    <table class="table table-striped table-hover" style="text-align: center; margin-top: 35px;">
+        <thead>
+        <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Длительность</th>
+            <th scope="col">Дата появления</th>
+            <th scope="col">
+                <button type="button" class="btn btn-outline-primary"
+                        onclick="window.location.href='{% url 'accounts:create_product' %}'">Добавить продукт
+                </button>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for el in product_info %}
+        <tr>
+            <td>{{ el.name }}</td>
+            <td>{{ el.price }}</td>
+            <td>{{ el.duration_of_action }}</td>
+            <td>{{ el.appearance_date }}</td>
+
+            <!-- Icons -->
+            <td><a href="{% url 'accounts:view_send_message' el.pk %}" class="fas fa-comment-medical fa-2x"></a></td>
+            <td><a href="{% url 'accounts:update_product' el.pk %}" class="fas fa-pen-square fa-2x"></a></td>
+            <td><a href="{% url 'accounts:delete_product' el.pk %}" class="fas fa-backspace fa-2x"></a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

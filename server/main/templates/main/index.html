@@ -2,26 +2,41 @@
 {% load static %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-<div class="main-container">
-    <table class="table table-striped table-hover" style="text-align: center; margin-top: 35px;">
-        <thead>
-        <tr>
-            <th scope="col">Название</th>
-            <th scope="col">Цена</th>
-            <th scope="col">Длительность</th>
-            <th scope="col">Дата появления</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for el in product_info %}
-        <tr>
-            <td><a href="#">{{ el.name }}</a></td>
-            <td>{{ el.price }}</td>
-            <td>{{ el.duration_of_action }}</td>
-            <td>{{ el.appearance_date }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="main_welcome">
+    {% for el in product_info %}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h5><a href="{% url 'main:show_product' el.pk %}" style="color: black;">{{ el.name }}</a></h5>
+            </div>
+            <div class="row" style="max-width: 830px;">
+                <div class="col-md-5" style="width: 470px;">
+                    <a href="{% url 'main:show_product' el.pk %}">
+                        <img src="{% static 'main/images/insurance-default-image.jpg' %}"
+                             class="img-fluid"
+                             style="width: 270px; height: 300px;">
+                    </a>
+                </div>
+                <div class="col-md-7">
+                    <ul class="list-group list-group-flush" style="font-size: 19px;">
+                        <li class="list-group-item">Компания: {{ el.company_key }}</li>
+                        <li class="list-group-item">Цена: {{ el.price }}</li>
+                        <li class="list-group-item">Длительность: {{ el.duration_of_action }} мес.</li>
+                        <li class="list-group-item">Дата появления: {{ el.appearance_date }}</li>
+                    </ul>
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-primary" style="color: white; width: 110px; height: 60px;
+margin-top: 20px;" onclick="window.location.href='{% url 'main:show_product' el.pk %}'">Перейти
+                        </button>
+                        <button type="button" class="btn btn-success" style="color: white; width: 135px; height: 60px;
+margin-top: 20px;" onclick="window.location.href='{% url 'main:create_message' el.pk %}'">Оставить заявку
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 </div>
 {% endblock %}

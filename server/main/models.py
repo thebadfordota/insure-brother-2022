@@ -15,12 +15,12 @@ class Product(BaseModel):
     Модель продукта страховой компании.
     """
     name = models.CharField(max_length=100, verbose_name="Название")
-    appearance_date = models.DateTimeField(default=django.utils.timezone.now, verbose_name="Дата появления")
+    appearance_date = models.DateField(default=django.utils.timezone.now, verbose_name="Дата появления")
     price = models.IntegerField(verbose_name="Ежемесячная цена")
     duration_of_action = models.IntegerField(verbose_name="Длительность действия в месяцах")
     about_product = models.CharField(blank=True, max_length=100, verbose_name="О продукте")
-    is_published = models.BooleanField(blank=True, default=True, verbose_name="Публикация")
-    company_key = models.ForeignKey(Company, on_delete=models.CASCADE)
+    is_published = models.BooleanField(blank=True, default=True, verbose_name="Опубликовать")
+    company_key = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name="Компания")
 
     class Meta:
         verbose_name_plural = 'Продукты'
