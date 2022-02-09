@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'django_elasticsearch_dsl',
     'main',
     'accounts'
 ]
@@ -46,6 +47,17 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # CRISPY_TEMPLATE_PACK = 'uni_form'
 # CRISPY_CLASS_CONVERTERS = {'textinput': "form-control"}
 # CRISPY_FAIL_SILENTLY = not DEBUG
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'es:9200'
+    },
+}
+
+ELASTICSEARCH_DSL_INDEX_SETTINGS = {
+    'number_of_shards': 1
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

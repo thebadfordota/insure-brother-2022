@@ -3,6 +3,7 @@ from django.views.generic import CreateView, DetailView, FormView, ListView
 from .models import ClientMessage, Product
 from .forms import ClientMessageForm, ProductFilterForm
 from .services import ProductFilterServices
+from .documents import ProductDocument
 
 
 class ProductListView(ListView):
@@ -23,7 +24,8 @@ class ProductListView(ListView):
     def post(self, request, *args, **kwargs):
         # context = self.get_context_data()  # Не получается унаследовать старый 'context'
         form = ProductFilterForm(request.POST)
-        product_info = ProductFilterServices(form, Product.objects.filter(is_published=True)).get_filtered_fields()
+        product_info = ProductDocument.search()
+        product_info = ProductFilterServices(form, product_info).get_filtered_fields()
         context = {'product_info': product_info, 'form': form, 'title': 'Все предложения', 'heading': 'Все предложения'}
         return render(request, self.template_name, context)
 
