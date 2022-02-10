@@ -54,9 +54,9 @@ ELASTICSEARCH_DSL = {
     },
 }
 
-ELASTICSEARCH_DSL_INDEX_SETTINGS = {
-    'number_of_shards': 1
-}
+# ELASTICSEARCH_DSL_INDEX_SETTINGS = {
+#     'number_of_shards': 1
+# }
 
 
 MIDDLEWARE = [
