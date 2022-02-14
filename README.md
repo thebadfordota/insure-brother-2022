@@ -8,6 +8,6 @@
 <b>Создать администратора:</b><br>
 `docker-compose exec web python manage.py createsuperuser`<br><br>
 
-<b>Команды Elasticsearch (Не работает из-за ошибки подключения!)</b><br>
+<b>Команды Elasticsearch</b><br>
 <b>Создание индексов:</b><br>
 `python manage.py search_index --rebuild`<br><br>

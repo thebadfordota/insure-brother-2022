@@ -21,13 +21,13 @@ class ProductListView(ListView):
         context['heading'] = 'Все предложения'
         return context
 
-    def post(self, request, *args, **kwargs):
-        # context = self.get_context_data()  # Не получается унаследовать старый 'context'
-        form = ProductFilterForm(request.POST)
-        product_info = ProductDocument.search()
-        product_info = ProductFilterServices(form, product_info).get_filtered_fields()
-        context = {'product_info': product_info, 'form': form, 'title': 'Все предложения', 'heading': 'Все предложения'}
-        return render(request, self.template_name, context)
+    # def post(self, request, *args, **kwargs):
+    #     # context = self.get_context_data()  # Не получается унаследовать старый 'context'
+    #     form = ProductFilterForm(request.POST)
+    #     product_info = ProductDocument.search()
+    #     product_info = ProductFilterServices(form, product_info).get_filtered_fields()
+    #     context = {'product_info': product_info, 'form': form, 'title': 'Все предложения', 'heading': 'Все предложения'}
+    #     return render(request, self.template_name, context)
 
     def get_queryset(self):
         product_info = Product.objects.filter(is_published=True)
