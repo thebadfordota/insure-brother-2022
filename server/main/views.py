@@ -45,7 +45,6 @@ class ProductListView(ListView):
         #         product_info = product_info.filter(product_name=form.cleaned_data['product_name'])
 
 
-
 class ShowProductDetailView(DetailView):
     """
     View для отображения подробной информации о конкретном продукте.

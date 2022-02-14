@@ -50,7 +50,7 @@ class CreateProduct(CreateView):
     query_pk_and_slug = True
 
     def get_success_url(self):
-        return f'/'
+        return '/'
 
     def form_valid(self, form):
         if form.is_valid():
@@ -79,7 +79,7 @@ class ProductUpdateView(UpdateView):
     form_class = ProductForm
 
     def get_success_url(self):
-        return f'/accounts/profile/'
+        return '/accounts/profile/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -102,7 +102,7 @@ class ProductDeleteView(DeleteView):
         return context
 
     def get_success_url(self):
-        return f'/accounts/profile/'
+        return '/accounts/profile/'
 
 
 class LoginView(View):
@@ -127,29 +127,19 @@ class LoginView(View):
         return render(request, 'accounts/form-template.html', context)
 
 
-class RegisterView(View):
-    """
-    View для регистрации пользователя.
-    """
-    def get(self, request):
-        form = RegisterForm(self.request.POST or None)
-        context = {'form': form, 'title': 'Регистрация', 'heading': 'Зарегистрироваться'}
-        return render(request, 'accounts/form-template.html', context)
+class RegisterUserCreateView(CreateView):
+    model = Company
+    template_name = 'accounts/form-template.html'
+    form_class = RegisterForm
+    query_pk_and_slug = True
 
-    def post(self, request):
-        form = RegisterForm(self.request.POST or None)
-        if form.is_valid():  # не работает
-            # new_user = form.save(commit=False)
-            # new_user.username = form.cleaned_data['username']
-            # new_user.email = form.cleaned_data['email']
-            # new_user.about_company = form.cleaned_data['about_company']
-            # new_user.image = form.cleaned_data['image']
-            # new_user.set_password(form.cleaned_data['password'])
-            # new_user.save()
-            form.save()
-            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            login(request, user)
-            return redirect(reverse('main:home'))
-        context = {'form': form, 'title': 'Регистрация', 'heading': 'Зарегистрироваться'}
-        return render(request, 'accounts/form-template.html', context)
+    def get_success_url(self):
+        return f'/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Регистрация'
+        context['heading'] = 'Зарегистрироваться'
+        return context
+
 

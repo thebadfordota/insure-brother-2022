@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import ProfileListView, CreateProduct, MessageListView, ProductDeleteView, ProductUpdateView, LoginView, \
-    RegisterView
+    RegisterUserCreateView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth.views import LogoutView
 
@@ -14,7 +14,7 @@ urlpatterns = [
     path('delete/product/<slug:pk>', ProductDeleteView.as_view(), name='delete_product'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='main:home'), name='logout'),
-    path('register/', RegisterView.as_view(), name='register'),
+    path('register/', RegisterUserCreateView.as_view(), name='register'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
