@@ -15,7 +15,7 @@ services:
       - db
       - rabbit
       - es
-  db: # Не получилось подлючить volumes к postgres
+  db:
     container_name: db
     hostname: db
     image: postgres:12.0-alpine
