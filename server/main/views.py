@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.views.generic import CreateView, DetailView, FormView, ListView
+# from django.shortcuts import render
+from django.views.generic import CreateView, DetailView, ListView
 from .models import ClientMessage, Product
 from .forms import ClientMessageForm, ProductFilterForm
 from .services import ProductFilterServices
@@ -30,8 +30,7 @@ class ProductListView(ListView):
     #     return render(request, self.template_name, context)
 
     def get_queryset(self):
-        product_info = Product.objects.filter(is_published=True)
-        return product_info
+        return Product.objects.filter(is_published=True)
         # context = self.get_context_data()
         # form = ProductFilterForm(self.request.POST)
         # if form.is_valid():

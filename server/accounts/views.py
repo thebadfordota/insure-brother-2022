@@ -1,6 +1,6 @@
 from main.models import Product, ClientMessage
 from django.shortcuts import render, redirect, reverse
-from django.views.generic import View, UpdateView, DeleteView, CreateView, ListView, DetailView
+from django.views.generic import View, UpdateView, DeleteView, CreateView, ListView
 from .models import Company
 from .forms import LoginForm, RegisterForm, ProductForm
 from django.contrib.auth import authenticate, login
@@ -44,6 +44,9 @@ class MessageListView(ListView):
 
 
 class CreateProduct(CreateView):
+    """
+    View для создания продукта коммпании.
+    """
     model = Product
     template_name = 'accounts/form-template.html'
     form_class = ProductForm
@@ -128,6 +131,9 @@ class LoginView(View):
 
 
 class RegisterUserCreateView(CreateView):
+    """
+    View для регистрации пользователя.
+    """
     model = Company
     template_name = 'accounts/form-template.html'
     form_class = RegisterForm
@@ -141,5 +147,3 @@ class RegisterUserCreateView(CreateView):
         context['title'] = 'Регистрация'
         context['heading'] = 'Зарегистрироваться'
         return context
-
-
