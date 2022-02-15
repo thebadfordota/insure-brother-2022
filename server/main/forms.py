@@ -8,7 +8,7 @@ class ClientMessageForm(forms.ModelForm):
     """
     class Meta:
         model = ClientMessage
-        fields = ['last_name', 'first_name', 'patronymic', 'phone', 'email', 'product_key']
+        fields = ['last_name', 'first_name', 'patronymic', 'phone', 'email', 'product_key', 'appearance_date']
 
 
 class ProductFilterForm(forms.Form):

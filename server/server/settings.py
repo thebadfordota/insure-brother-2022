@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'crispy_forms',
-    # 'django_elasticsearch_dsl',
+    'django_celery_beat',
+    'django_elasticsearch_dsl',
 
     'main',
     'accounts'
@@ -50,11 +51,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # CRISPY_CLASS_CONVERTERS = {'textinput': "form-control"}
 # CRISPY_FAIL_SILENTLY = not DEBUG
 
-# ELASTICSEARCH_DSL = {
-#     'default': {
-#         'hosts': 'es:9200'
-#     }
-# }
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'es:9200'
+    }
+}
 
 # ELASTICSEARCH_DSL_INDEX_SETTINGS = {
 #     'number_of_shards': 1
@@ -136,6 +137,25 @@ TIME_ZONE = 'Europe/Samara'
 USE_I18N = True
 
 USE_TZ = True
+
+# SMTP Settings
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = "input_yor_email@mail.ru"
+EMAIL_HOST_PASSWORD = "input_your_password"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# RabbitMQ Settings
+RABBITMQ_DEFAULT_USER = os.environ.get('RABBITMQ_DEFAULT_USER', 'admin')
+RABBITMQ_DEFAULT_PASS = os.environ.get('RABBITMQ_DEFAULT_PASS', 'admin')
+RABBITMQ_DEFAULT_VHOST = os.environ.get('RABBITMQ_DEFAULT_VHOST', '/')
+
+# Celery Settings
+CELERY_BROKER_URL = f'pyamqp://{RABBITMQ_DEFAULT_USER}:{RABBITMQ_DEFAULT_PASS}@rabbit:5672/{RABBITMQ_DEFAULT_VHOST}'
 
 
 # Static files (CSS, JavaScript, Images)

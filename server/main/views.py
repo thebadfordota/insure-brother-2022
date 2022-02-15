@@ -1,9 +1,10 @@
-# from django.shortcuts import render
+from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, ListView
 from .models import ClientMessage, Product
 from .forms import ClientMessageForm, ProductFilterForm
 from .services import ProductFilterServices
 from .documents import ProductDocument
+from .tasks import send_user_info
 
 
 class ProductListView(ListView):
@@ -21,27 +22,16 @@ class ProductListView(ListView):
         context['heading'] = 'Все предложения'
         return context
 
-    # def post(self, request, *args, **kwargs):
-    #     # context = self.get_context_data()  # Не получается унаследовать старый 'context'
-    #     form = ProductFilterForm(request.POST)
-    #     product_info = ProductDocument.search()
-    #     product_info = ProductFilterServices(form, product_info).get_filtered_fields()
-    #     context = {'product_info': product_info, 'form': form, 'title': 'Все предложения', 'heading': 'Все предложения'}
-    #     return render(request, self.template_name, context)
+    def post(self, request, *args, **kwargs):
+        # context = self.get_context_data()  # Не получается унаследовать старый 'context'
+        form = ProductFilterForm(request.POST)
+        product_info = ProductDocument.search()
+        product_info = ProductFilterServices(form, product_info).get_filtered_fields()
+        context = {'product_info': product_info, 'form': form, 'title': 'Все предложения', 'heading': 'Все предложения'}
+        return render(request, self.template_name, context)
 
     def get_queryset(self):
         return Product.objects.filter(is_published=True)
-        # context = self.get_context_data()
-        # form = ProductFilterForm(self.request.POST)
-        # if form.is_valid():
-        #     if form.cleaned_data['price']:
-        #         product_info = product_info.filter(price=form.cleaned_data['price'])
-        #     if form.cleaned_data['duration_of_action']:
-        #         product_info = product_info.filter(duration_of_action=form.cleaned_data['duration_of_action'])
-        #     if form.cleaned_data['appearance_date']:
-        #         product_info = product_info.filter(appearance_date=form.cleaned_data['appearance_date'])
-        #     if form.cleaned_data['product_name']:
-        #         product_info = product_info.filter(product_name=form.cleaned_data['product_name'])
 
 
 class ShowProductDetailView(DetailView):
@@ -51,7 +41,6 @@ class ShowProductDetailView(DetailView):
     model = Product
     template_name = 'main/show-product.html'
     query_pk_and_slug = True
-    # pk_url_kwarg = 'pk'
     context_object_name = 'product_info'
 
     def get_context_data(self, **kwargs):
@@ -84,3 +73,21 @@ class SendMessageCreateView(CreateView):
         initial = super().get_initial()
         initial['product_key'] = Product.objects.get(pk=self.kwargs['pk'])
         return initial
+
+    def form_valid(self, form):
+        form.save()
+        current_company = form.cleaned_data.get('product_key')
+        company_email = current_company.company_key.email
+        customer_info = {
+            'last_name': str(form.cleaned_data['last_name']),
+            'first_name': str(form.cleaned_data['first_name']),
+            'patronymic': str(form.cleaned_data['patronymic']),
+            'phone': str(form.cleaned_data['phone']),
+            'email': str(form.cleaned_data['email']),
+            'appearance_date': str(form.cleaned_data['appearance_date']),
+            'product_key': str(form.cleaned_data['product_key']),
+            'company_email': str(company_email),
+        }
+        print(customer_info)
+        send_user_info.delay(customer_info)  # celery task
+        return super().form_valid(form)
