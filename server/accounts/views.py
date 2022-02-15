@@ -1,41 +1,59 @@
 from main.models import Product, ClientMessage
 from django.shortcuts import render, redirect, reverse
-from django.views.generic import View, UpdateView, DeleteView, CreateView
+from django.views.generic import View, UpdateView, DeleteView, CreateView, ListView
 from .models import Company
 from .forms import LoginForm, RegisterForm, ProductForm
 from django.contrib.auth import authenticate, login
 
 
-def view_profile(request):
+class ProfileListView(ListView):
     """
-    View для профиля компании.
+    View для отображения списка продуктов.
     """
-    product_info = Product.objects.filter(company_key=request.user.id)
-    context = {'title': 'Профиль', 'product_info': product_info}
-    return render(request, 'accounts/profile.html', context)
+    model = Product
+    template_name = "accounts/profile.html"
+    context_object_name = "product_info"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Профиль'
+        context['heading'] = 'Профиль'
+        return context
+
+    def get_queryset(self):
+        return Product.objects.filter(company_key=self.request.user.id)
 
 
-def view_send_message(request, product_id):
+class MessageListView(ListView):
     """
     View для просмотра всех заявок на определённый продукт.
     """
-    message_info = ClientMessage.objects.filter(product_key=product_id)
-    context = {
-        'title': 'Все сообщения',
-        'heading': 'Все сообщения',
-        'message_info': message_info
-    }
-    return render(request, 'accounts/message.html', context)
+    model = ClientMessage
+    query_pk_and_slug = True
+    template_name = "accounts/message.html"
+    context_object_name = "message_info"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Все сообщения'
+        context['heading'] = 'Все сообщения'
+        return context
+
+    def get_queryset(self):
+        return ClientMessage.objects.filter(product_key=self.kwargs['product_id'])
 
 
 class CreateProduct(CreateView):
+    """
+    View для создания продукта коммпании.
+    """
     model = Product
     template_name = 'accounts/form-template.html'
     form_class = ProductForm
     query_pk_and_slug = True
 
     def get_success_url(self):
-        return f'/'
+        return '/'
 
     def form_valid(self, form):
         if form.is_valid():
@@ -64,7 +82,7 @@ class ProductUpdateView(UpdateView):
     form_class = ProductForm
 
     def get_success_url(self):
-        return f'/accounts/profile/'
+        return '/accounts/profile/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -87,7 +105,7 @@ class ProductDeleteView(DeleteView):
         return context
 
     def get_success_url(self):
-        return f'/accounts/profile/'
+        return '/accounts/profile/'
 
 
 class LoginView(View):
@@ -112,28 +130,20 @@ class LoginView(View):
         return render(request, 'accounts/form-template.html', context)
 
 
-class RegisterView(View):
+class RegisterUserCreateView(CreateView):
     """
     View для регистрации пользователя.
     """
-    def get(self, request):
-        form = RegisterForm(self.request.POST or None)
-        context = {'form': form, 'title': 'Регистрация', 'heading': 'Зарегистрироваться'}
-        return render(request, 'accounts/form-template.html', context)
+    model = Company
+    template_name = 'accounts/form-template.html'
+    form_class = RegisterForm
+    query_pk_and_slug = True
 
-    def post(self, request):
-        form = RegisterForm(self.request.POST or None)
-        if form.is_valid():
-            new_user = form.save(commit=False)
-            new_user.username = form.cleaned_data['username']
-            new_user.email = form.cleaned_data['email']
-            new_user.about_company = form.cleaned_data['about_company']
-            new_user.image = form.cleaned_data['image']
-            new_user.set_password(form.cleaned_data['password'])
-            new_user.save()
-            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            login(request, user)
-            return redirect(reverse('main:home'))
-        context = {'form': form, 'title': 'Регистрация', 'heading': 'Зарегистрироваться'}
-        return render(request, 'accounts/form-template.html', context)
+    def get_success_url(self):
+        return f'/'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Регистрация'
+        context['heading'] = 'Зарегистрироваться'
+        return context

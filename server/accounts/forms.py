@@ -58,24 +58,19 @@ class RegisterForm(forms.ModelForm):
         self.fields['about_company'].label = 'О компании'
         self.fields['image'].label = 'Логотип'
 
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        if Company.objects.filter(email=email).exists():
-            raise forms.ValidationError(f'Данный почтовый адрес "{email}" уже зарегистрирован в системе')
-        return email
-
-    def clean_username(self):
-        username = self.cleaned_data['username']
-        if Company.objects.filter(username=username).exists():
-            raise forms.ValidationError(f'Имя "{username}" занято')
-        return username
-
     def clean(self):
         password = self.cleaned_data['password']
         confirm_password = self.cleaned_data['confirm_password']
         if password != confirm_password:
             raise forms.ValidationError('Пароли не совпадают')
         return self.cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
 
     class Meta:
         model = Company
