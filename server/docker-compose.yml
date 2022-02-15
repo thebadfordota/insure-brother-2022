@@ -21,9 +21,8 @@ services:
     image: postgres:12.0-alpine
     env_file:
       - ./.env.dev
-#    volumes:
-#      - postgres_data:/var/lib/postgresql/data/
-#      - ./data/db:/var/lib/postgresql/data
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/pgdata
   rabbit:
     container_name: rabbit
     hostname: rabbit
@@ -64,5 +63,5 @@ services:
     ports:
       - "9200:9200"
 
-#volumes:
-#  postgres_data:
+volumes:
+  postgres_data:
