@@ -1,5 +1,14 @@
 # Приложение "Застрахуй братуху"
 
+<b>Запуск тестов</b><br>
+<b>Юнит-тесты:</b><br>
+`python manage.py test .`<br><br>
+<b>Статический анализатор кода `pylint`:</b><br>
+<b>Запуск для приложения `accounts`</b><br>
+`docker-compose exec web pylint accounts`<br><br>
+<b>Запуск для приложения `main`</b><br>
+`docker-compose exec web pylint main`<br><br>
+
 <b>Команды Docker'а</b><br>
 <b>Собрать новый образ и запустить два контейнера:</b><br>
 `docker-compose up -d --build`<br><br>
