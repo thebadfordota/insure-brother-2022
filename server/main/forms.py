@@ -15,7 +15,7 @@ class ProductFilterForm(forms.Form):
     """
     Форма для фильтрации полей модели 'Product'.
     """
-    price = forms.IntegerField(label="Цена", required=False, widget=forms.NumberInput(attrs={
+    price = forms.IntegerField(label="Цена", required=False, min_value=0, widget=forms.NumberInput(attrs={
         'class': 'form-control', 'placeholder': 'Цена'
     }))
     duration_of_action = forms.IntegerField(label="Длительность", required=False, widget=forms.NumberInput(attrs={
