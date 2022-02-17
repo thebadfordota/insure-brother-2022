@@ -45,7 +45,6 @@ class ShowProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         context['title'] = kwargs["object"]
         context['heading'] = kwargs["object"]
         return context

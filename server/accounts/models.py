@@ -12,3 +12,6 @@ class Company(AbstractUser):
     class Meta(AbstractUser.Meta):
         verbose_name = "Компания"
         verbose_name_plural = "Компании"
+
+    def __str__(self):
+        return self.username
