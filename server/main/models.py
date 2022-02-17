@@ -49,4 +49,4 @@ class ClientMessage(BaseModel):
         ordering = ['-appearance_date']
 
     def __str__(self):
-        return str(self.last_name) + " " + str(self.appearance_date)
+        return str(self.last_name) + " " + str(self.first_name)
