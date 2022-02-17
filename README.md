@@ -3,7 +3,7 @@
 <b>Запуск тестов</b><br>
 <b>Юнит-тесты:</b><br>
 `docker-compose exec web python manage.py test .`<br><br>
-<b>Статический анализатор кода `pylint`:</b><br>
+<b>Запуск `pylint`:</b><br>
 <b>Запуск для приложения `accounts`</b><br>
 `docker-compose exec web pylint accounts`<br><br>
 <b>Запуск для приложения `main`</b><br>
