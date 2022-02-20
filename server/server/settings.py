@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-# CRISPY_TEMPLATE_PACK = 'uni_form'
+# CRISPY_TEMPLATE_PACK = 'uni_form'  # var
 # CRISPY_CLASS_CONVERTERS = {'textinput': "form-control"}
 # CRISPY_FAIL_SILENTLY = not DEBUG
 
