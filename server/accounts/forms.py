@@ -30,9 +30,8 @@ class LoginForm(forms.ModelForm):
         if not Company.objects.filter(username=username).exists():
             raise forms.ValidationError(f'Компания с названием {username} не найдена в системе.')
         user = Company.objects.filter(username=username).first()
-        if user:
-            if not user.check_password(password):
-                raise forms.ValidationError("Неверный пароль")
+        if not user.check_password(password):
+            raise forms.ValidationError("Неверный пароль")
         return self.cleaned_data
 
     class Meta:

@@ -1,11 +1,14 @@
+from django.contrib.auth.decorators import login_required
 from main.models import Product, ClientMessage
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import View, UpdateView, DeleteView, CreateView, ListView
 from .models import Company
 from .forms import LoginForm, RegisterForm, ProductForm
 from django.contrib.auth import authenticate, login
+from django.utils.decorators import method_decorator
 
 
+@method_decorator(login_required, name='dispatch')
 class ProfileListView(ListView):
     """
     View для отображения списка продуктов.
@@ -24,6 +27,7 @@ class ProfileListView(ListView):
         return Product.objects.filter(company_key=self.request.user.id)
 
 
+@method_decorator(login_required, name='dispatch')
 class MessageListView(ListView):
     """
     View для просмотра всех заявок на определённый продукт.
@@ -43,6 +47,7 @@ class MessageListView(ListView):
         return ClientMessage.objects.filter(product_key=self.kwargs['product_id'])
 
 
+@method_decorator(login_required, name='dispatch')
 class CreateProduct(CreateView):
     """
     View для создания продукта коммпании.
@@ -73,6 +78,7 @@ class CreateProduct(CreateView):
         return initial
 
 
+@method_decorator(login_required, name='dispatch')
 class ProductUpdateView(UpdateView):
     """
     View для изменения записи в таблице 'Product'.
@@ -91,6 +97,7 @@ class ProductUpdateView(UpdateView):
         return context
 
 
+@method_decorator(login_required, name='dispatch')
 class ProductDeleteView(DeleteView):
     """
     View для удаления записи из таблицы 'Product'.

@@ -76,7 +76,8 @@ class SendMessageCreateView(CreateView):
     def form_valid(self, form):
         form.save()
         current_company = form.cleaned_data.get('product_key')
-        company_email = current_company.company_key.email
+        company_key = current_company.company_key
+        company_email = company_key.email if company_key else None
         customer_info = {
             'last_name': str(form.cleaned_data['last_name']),
             'first_name': str(form.cleaned_data['first_name']),
