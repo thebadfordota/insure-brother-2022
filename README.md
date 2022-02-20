@@ -16,8 +16,11 @@
 `docker-compose exec web python manage.py migrate`<br><br>
 <b>Создать администратора:</b><br>
 `docker-compose exec web python manage.py createsuperuser`<br><br>
-<b>Все бд пользователя postgres:</b><br>
-`docker-compose exec db psql —username=postgres`<br><br>
+<b>Создание новой бд в postgres:</b><br>
+`psql -Upostgres`<br><br>
+`create database insure_brother;`<br><br>
+<b>Удалить тома и контейнеры</b><br>
+`docker-compose down -v`<br><br>
 
 <b>Команды Elasticsearch</b><br>
 <b>Создание индексов:</b><br>
