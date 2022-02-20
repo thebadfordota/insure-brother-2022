@@ -62,6 +62,14 @@ services:
       - discovery.type=single-node
     ports:
       - "9200:9200"
+  mongo:
+    image: mongo:5.0.2
+    container_name: mongo
+    hostname: mongo
+    env_file:
+      - ./.env.dev
+    ports:
+      - "27017:27017"
 
 volumes:
   postgres_data:

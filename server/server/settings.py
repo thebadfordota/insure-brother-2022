@@ -154,6 +154,13 @@ RABBITMQ_DEFAULT_USER = os.environ.get('RABBITMQ_DEFAULT_USER', 'admin')
 RABBITMQ_DEFAULT_PASS = os.environ.get('RABBITMQ_DEFAULT_PASS', 'admin')
 RABBITMQ_DEFAULT_VHOST = os.environ.get('RABBITMQ_DEFAULT_VHOST', '/')
 
+# MongoDB Settings
+MONGODB_HOST = os.environ.get('MONGODB_HOST', 'localhost')
+MONGODB_PORT = int(os.environ.get('MONGODB_PORT', 27017))
+MONGODB_USERNAME = os.environ.get('MONGO_INITDB_ROOT_USERNAME', 'admin')
+MONGODB_PASSWORD = os.environ.get('MONGO_INITDB_ROOT_PASSWORD', 'admin')
+MONGODB_DATABASE = os.environ.get('MONGODB_DATABASE', 'insure_brother')
+
 # Celery Settings
 CELERY_BROKER_URL = f'pyamqp://{RABBITMQ_DEFAULT_USER}:{RABBITMQ_DEFAULT_PASS}@rabbit:5672/{RABBITMQ_DEFAULT_VHOST}'
 
