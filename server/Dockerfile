@@ -1,7 +1,6 @@
 # pull official base image
-FROM python:3.8.3-alpine
+FROM python:3.10.2-alpine3.15
 # set work directory
-#WORKDIR /usr/src/app
 WORKDIR /code
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1

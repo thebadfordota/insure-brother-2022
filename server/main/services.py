@@ -33,8 +33,11 @@ class SendEmailServices:
         self.customer_info = customer_info
 
     def send(self):
-        html_body = render_to_string('main/email-template.html', self.customer_info)
-        message = EmailMultiAlternatives(subject=f'Заявка на продукт {self.customer_info["product_key"]}',
-                                         to=[self.customer_info["company_email"]])
-        message.attach_alternative(html_body, "text/html")
-        message.send()
+        if self.customer_info["company_email"]:
+            html_body = render_to_string('main/email-template.html', self.customer_info)
+            message = EmailMultiAlternatives(subject=f'Заявка на продукт {self.customer_info["product_key"]}',
+                                             to=[self.customer_info["company_email"]])
+            message.attach_alternative(html_body, "text/html")
+            message.send()
+        else:
+            print("Некорректный email компании")
