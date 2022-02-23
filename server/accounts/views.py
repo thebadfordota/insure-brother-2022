@@ -42,7 +42,6 @@ class MessageListView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Все сообщения'
         count_views = CountViewsServices()
-        print(self.kwargs["product_id"])
         context['heading'] = f'Кол-во просмотров: {count_views.get_count_views(int(self.kwargs["product_id"]))}'
         return context
 
@@ -97,6 +96,12 @@ class ProductUpdateView(UpdateView):
         context['title'] = 'Обновить продукт'
         context['heading'] = 'Обновить продукт'
         return context
+
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+            CountViewsServices().update_count_views_info(int(self.kwargs['pk']), form.cleaned_data['name'])
+        return super(ProductUpdateView, self).form_valid(form)
 
 
 @method_decorator(login_required, name='dispatch')

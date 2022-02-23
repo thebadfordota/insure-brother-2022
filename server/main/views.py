@@ -53,10 +53,7 @@ class ShowProductDetailView(DetailView):
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
         product_info = Product.objects.get(pk=self.kwargs["pk"])
-        # print(product_info.name)
         CountViewsServices().increase_count_views(int(self.kwargs["pk"]), product_info.name)
-
-        # count_views.increase_count_views(self.kwargs["pk"], self.kwargs["name"])
         return response
 
 
