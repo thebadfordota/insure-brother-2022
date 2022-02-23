@@ -5,6 +5,7 @@ from .forms import ClientMessageForm, ProductFilterForm
 from .services import ProductFilterServices
 from .documents import ProductDocument
 from .tasks import send_user_info
+from accounts.services import CountViewsServices
 
 
 class ProductListView(ListView):
@@ -48,6 +49,15 @@ class ShowProductDetailView(DetailView):
         context['title'] = kwargs["object"]
         context['heading'] = kwargs["object"]
         return context
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        product_info = Product.objects.get(pk=self.kwargs["pk"])
+        # print(product_info.name)
+        CountViewsServices().increase_count_views(int(self.kwargs["pk"]), product_info.name)
+
+        # count_views.increase_count_views(self.kwargs["pk"], self.kwargs["name"])
+        return response
 
 
 class SendMessageCreateView(CreateView):

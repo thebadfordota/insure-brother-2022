@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from main.models import Product, ClientMessage
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import View, UpdateView, DeleteView, CreateView, ListView
@@ -6,6 +5,8 @@ from .models import Company
 from .forms import LoginForm, RegisterForm, ProductForm
 from django.contrib.auth import authenticate, login
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from .services import CountViewsServices
 
 
 @method_decorator(login_required, name='dispatch')
@@ -40,7 +41,9 @@ class MessageListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Все сообщения'
-        context['heading'] = 'Все сообщения'
+        count_views = CountViewsServices()
+        print(self.kwargs["product_id"])
+        context['heading'] = f'Кол-во просмотров: {count_views.get_count_views(int(self.kwargs["product_id"]))}'
         return context
 
     def get_queryset(self):
@@ -63,7 +66,6 @@ class CreateProduct(CreateView):
     def form_valid(self, form):
         if form.is_valid():
             form.save()
-
         return super(CreateProduct, self).form_valid(form)
 
     def get_context_data(self, **kwargs):

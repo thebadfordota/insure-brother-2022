@@ -27,4 +27,4 @@
 `docker-compose exec web python manage.py search_index --rebuild`<br><br>
 
 <b>Команды Celery</b><br>
-Необходимо ввести в `settings.py` пароль и логин электронной почты
+Необходимо внести в `settings.py` пароль и логин электронной почты
