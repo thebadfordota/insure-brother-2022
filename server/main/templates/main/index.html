@@ -4,8 +4,6 @@
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
 <div class="main_welcome">
-
-    <!--        <div class="col-md-3">-->
     <form action="{% url 'main:home' %}" method="POST" style="margin-bottom: 45px;">
         <div class="container">
             <div class="row row-cols-md-5 g-3">
@@ -17,12 +15,9 @@
             </div>
         </div>
     </form>
-    <!--        </div>-->
 
     <div class="row">
-
         {% for el in product_info %}
-        <!--        <div class="container">-->
         <div class="col text-center">
             <div class="card border-primary mb-3" style="width: 20rem; margin: 0 auto;">
                 <a href="{% url 'main:show_product' el.pk %}"><img
@@ -50,10 +45,8 @@ margin-top: 20px;" onclick="window.location.href='{% url 'main:create_message' e
             </div>
         </div>
 
-        <!--        </div>-->
         {% endfor %}
     </div>
-    <!--    </div>-->
 
 </div>
 </div>
