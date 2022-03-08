@@ -4,45 +4,57 @@
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
 <div class="main_welcome">
-    <form action="{% url 'main:home' %}" method="POST">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <input type="submit" class="btn btn-primary" value="Применить">
-    </form>
-    {% for el in product_info %}
-    <div class="container mt-5">
-        <div class="card">
-            <div class="card-header">
-                <h5><a href="{% url 'main:show_product' el.pk %}" style="color: black;">{{ el.name }}</a></h5>
-            </div>
-            <div class="row" style="max-width: 830px;">
-                <div class="col-md-5" style="width: 470px;">
-                    <a href="{% url 'main:show_product' el.pk %}">
-                        <img src="{% static 'main/images/insurance-default-image.jpg' %}"
-                             class="img-fluid"
-                             style="width: 270px; height: 300px;">
-                    </a>
-                </div>
-                <div class="col-md-7">
-                    <ul class="list-group list-group-flush" style="font-size: 19px;">
-                        <li class="list-group-item">Компания: {{ el.company_key }}</li>
-                        <li class="list-group-item">Цена: {{ el.price }}</li>
-                        <li class="list-group-item">Длительность: {{ el.duration_of_action }} мес.</li>
-                        <li class="list-group-item">Дата появления: {{ el.appearance_date }}</li>
-                    </ul>
-                    <div class="mb-3">
-                        <button type="button" class="btn btn-primary" style="color: white; width: 110px; height: 60px;
-margin-top: 20px;" onclick="window.location.href='{% url 'main:show_product' el.pk %}'">Перейти
-                        </button>
-                        <button type="button" class="btn btn-success" style="color: white; width: 135px; height: 60px;
-margin-top: 20px;" onclick="window.location.href='{% url 'main:create_message' el.pk %}'">Оставить заявку
-                        </button>
+
+    <!--        <div class="col-md-3">-->
+    <form action="{% url 'main:home' %}" method="POST" style="margin-bottom: 45px;">
+        <div class="container">
+            <div class="row row-cols-md-5 g-3">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="">
+                <input type="submit" class="btn btn-primary col" value="Применить" style="margin-top: 37px;">
                     </div>
+            </div>
+        </div>
+    </form>
+    <!--        </div>-->
+
+    <div class="row">
+
+        {% for el in product_info %}
+        <!--        <div class="container">-->
+        <div class="col text-center">
+            <div class="card border-primary mb-3" style="width: 20rem; margin: 0 auto;">
+                <a href="{% url 'main:show_product' el.pk %}"><img
+                        src="{% static 'main/images/insurance-default-image.jpg' %}" class="card-img-top img-fluid">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'main:show_product' el.pk %}" style="color: black;">{{ el.name }}</a>
+                    </h5>
+                </div>
+                <ul class="list-group list-group-flush" style="font-size: 19px;">
+                    <li class="list-group-item">Компания: {{ el.company_key }}</li>
+                    <li class="list-group-item">Цена: {{ el.price }}</li>
+                    <li class="list-group-item">Длительность: {{ el.duration_of_action }} мес.</li>
+                    <li class="list-group-item">Дата появления: {{ el.appearance_date }}</li>
+                </ul>
+                <div class="card-body mb-3">
+                    <button type="button" class="btn btn-outline-primary" style="width: 110px; height: 60px;
+margin-top: 20px;" onclick="window.location.href='{% url 'main:show_product' el.pk %}'">Перейти
+                    </button>
+                    <button type="button" class="btn btn-outline-success" style="width: 135px; height: 60px;
+margin-top: 20px;" onclick="window.location.href='{% url 'main:create_message' el.pk %}'">Оставить заявку
+                    </button>
                 </div>
             </div>
         </div>
+
+        <!--        </div>-->
+        {% endfor %}
     </div>
-    {% endfor %}
+    <!--    </div>-->
+
 </div>
 </div>
 {% endblock %}
