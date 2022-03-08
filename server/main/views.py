@@ -24,7 +24,7 @@ class ProductListView(ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        # context = self.get_context_data()  # Не получается унаследовать старый 'context'
+        # context = self.get_context_data(*args, **kwargs)  # Не получается унаследовать старый 'context'
         form = ProductFilterForm(request.POST)
         product_info = ProductDocument.search()
         product_info = ProductFilterServices(form, product_info).get_filtered_fields()

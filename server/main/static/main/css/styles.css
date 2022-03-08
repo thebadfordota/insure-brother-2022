@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin');
 
+:root{
+    --color-aqua: aqua;
+}
+
 * {
     margin: 0;
     padding: 0;
