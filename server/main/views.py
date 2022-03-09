@@ -44,7 +44,7 @@ class ShowProductDetailView(DetailView):
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
         product_info = Product.objects.get(pk=self.kwargs["pk"])
-        CountViewsServices().increase_count_views(int(self.kwargs["pk"]), product_info.name)
+        CountViewsServices(int(self.kwargs["pk"])).increase_count_views(product_info.name)  # Mongo
         return response
 
 

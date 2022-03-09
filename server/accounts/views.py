@@ -41,8 +41,8 @@ class MessageListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Все сообщения'
-        count_views = CountViewsServices()
-        context['heading'] = f'Кол-во просмотров: {count_views.get_count_views(int(self.kwargs["product_id"]))}'
+        count_views = CountViewsServices(int(self.kwargs["product_id"]))  # Mongo
+        context['heading'] = f'Кол-во просмотров: {count_views.get_count_views()}'
         return context
 
     def get_queryset(self):
@@ -100,7 +100,7 @@ class ProductUpdateView(UpdateView):
     def form_valid(self, form):
         if form.is_valid():
             form.save()
-            CountViewsServices().update_count_views_info(int(self.kwargs['pk']), form.cleaned_data['name'])
+            CountViewsServices(int(self.kwargs['pk'])).update_count_views_info(form.cleaned_data['name'])  # Mongo
         return super(ProductUpdateView, self).form_valid(form)
 
 
