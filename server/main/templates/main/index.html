@@ -4,14 +4,14 @@
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
 <div class="main_welcome">
-    <form action="{% url 'main:home' %}" method="POST" style="margin-bottom: 45px;">
+    <form action="{% url 'main:home' %}" method="get" style="margin-bottom: 45px;">
         <div class="container">
             <div class="row row-cols-md-5 g-3">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <div class="">
-                <input type="submit" class="btn btn-primary col" value="Применить" style="margin-top: 37px;">
-                    </div>
+                    <input type="submit" class="btn btn-primary col" value="Применить" style="margin-top: 37px;">
+                </div>
             </div>
         </div>
     </form>
@@ -47,6 +47,31 @@ margin-top: 20px;" onclick="window.location.href='{% url 'main:create_message' e
 
         {% endfor %}
     </div>
+
+    <nav aria-label="Page navigation example" class="main_pagination">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page=1">&laquo;</a></li>
+            <li class="page-item"><a class="page-link"
+                                     href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}">Назад</a>
+            </li>
+            {% endif %}
+
+            <span class="current">
+            <li class="page-item"><a
+                    class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link"
+                                     href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">Дальше</a>
+            </li>
+            <li class="page-item"><a class="page-link"
+                                     href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
 
 </div>
 </div>

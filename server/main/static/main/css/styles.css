@@ -223,16 +223,10 @@ header {
     font-size: 16px;
 }
 
-/*.form-control{*/
-/*    margin: auto;*/
-/*    margin-right: 10px;*/
-/*    margin-left: 10px;*/
-/*    width: auto;*/
-/*    font-size: 17px;*/
-/*}*/
+/* Pagination */
 
-/*Bootstrap img*/
-/*.img-fluid {*/
-/*    max-width: 100%;*/
-/*    height: auto;*/
-/*}*/
+.main_pagination{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}

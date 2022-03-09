@@ -60,7 +60,7 @@ class CreateProduct(CreateView):
     query_pk_and_slug = True
 
     def get_success_url(self):
-        return '/'
+        return '/accounts/profile/'
 
     def form_valid(self, form):
         if form.is_valid():
