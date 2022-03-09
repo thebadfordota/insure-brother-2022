@@ -14,6 +14,7 @@ class ProfileListView(ListView):
     """
     View для отображения списка продуктов.
     """
+    paginate_by = 10
     model = Product
     template_name = "accounts/profile.html"
     context_object_name = "product_info"
@@ -33,6 +34,7 @@ class MessageListView(ListView):
     """
     View для просмотра всех заявок на определённый продукт.
     """
+    paginate_by = 10
     model = ClientMessage
     query_pk_and_slug = True
     template_name = "accounts/message.html"

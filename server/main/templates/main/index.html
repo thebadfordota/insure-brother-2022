@@ -3,76 +3,47 @@
 {% load crispy_forms_tags %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-<div class="main_welcome">
-    <form action="{% url 'main:home' %}" method="get" style="margin-bottom: 45px;">
-        <div class="container">
-            <div class="row row-cols-md-5 g-3">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <div class="">
-                    <input type="submit" class="btn btn-primary col" value="Применить" style="margin-top: 37px;">
-                </div>
+<form action="{% url 'main:home' %}" method="get" style="margin-bottom: 45px;">
+    <div class="container">
+        <div class="row row-cols-md-5 g-3">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="">
+                <input type="submit" class="btn btn-primary col" value="Применить" style="margin-top: 37px;">
             </div>
         </div>
-    </form>
+    </div>
+</form>
 
-    <div class="row">
-        {% for el in product_info %}
-        <div class="col text-center">
-            <div class="card border-primary mb-3" style="width: 20rem; margin: 0 auto;">
-                <a href="{% url 'main:show_product' el.pk %}"><img
-                        src="{% static 'main/images/insurance-default-image.jpg' %}" class="card-img-top img-fluid">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <a href="{% url 'main:show_product' el.pk %}" style="color: black;">{{ el.name }}</a>
-                    </h5>
-                </div>
-                <ul class="list-group list-group-flush" style="font-size: 19px;">
-                    <li class="list-group-item">Компания: {{ el.company_key }}</li>
-                    <li class="list-group-item">Цена: {{ el.price }}</li>
-                    <li class="list-group-item">Длительность: {{ el.duration_of_action }} мес.</li>
-                    <li class="list-group-item">Дата появления: {{ el.appearance_date }}</li>
-                </ul>
-                <div class="card-body mb-3">
-                    <button type="button" class="btn btn-outline-primary" style="width: 110px; height: 60px;
+<div class="row">
+    {% for el in product_info %}
+    <div class="col text-center">
+        <div class="card border-primary mb-3" style="width: 20rem; margin: 0 auto;">
+            <a href="{% url 'main:show_product' el.pk %}"><img
+                    src="{% static 'main/images/insurance-default-image.jpg' %}" class="card-img-top img-fluid">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'main:show_product' el.pk %}" style="color: black;">{{ el.name }}</a>
+                </h5>
+            </div>
+            <ul class="list-group list-group-flush" style="font-size: 19px;">
+                <li class="list-group-item">Компания: {{ el.company_key }}</li>
+                <li class="list-group-item">Цена: {{ el.price }}</li>
+                <li class="list-group-item">Длительность: {{ el.duration_of_action }} мес.</li>
+                <li class="list-group-item">Дата появления: {{ el.appearance_date }}</li>
+            </ul>
+            <div class="card-body mb-3">
+                <button type="button" class="btn btn-outline-primary" style="width: 110px; height: 60px;
 margin-top: 20px;" onclick="window.location.href='{% url 'main:show_product' el.pk %}'">Перейти
-                    </button>
-                    <button type="button" class="btn btn-outline-success" style="width: 135px; height: 60px;
+                </button>
+                <button type="button" class="btn btn-outline-success" style="width: 135px; height: 60px;
 margin-top: 20px;" onclick="window.location.href='{% url 'main:create_message' el.pk %}'">Оставить заявку
-                    </button>
-                </div>
+                </button>
             </div>
         </div>
-
-        {% endfor %}
     </div>
 
-    <nav aria-label="Page navigation example" class="main_pagination">
-        <ul class="pagination">
-            {% if page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page=1">&laquo;</a></li>
-            <li class="page-item"><a class="page-link"
-                                     href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}">Назад</a>
-            </li>
-            {% endif %}
-
-            <span class="current">
-            <li class="page-item"><a
-                    class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a></li>
-        </span>
-
-            {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link"
-                                     href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">Дальше</a>
-            </li>
-            <li class="page-item"><a class="page-link"
-                                     href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}">&raquo;</a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
-
-</div>
+    {% endfor %}
 </div>
 {% endblock %}

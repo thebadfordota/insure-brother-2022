@@ -53,7 +53,35 @@
             </div>
         </nav>
     </header>
-    {% block content %}{% endblock %}
+    <div class="main_welcome">
+        {% block content %}{% endblock %}
+        {% if page_obj.has_other_pages %}
+        <nav aria-label="Page navigation example" class="main_pagination">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page=1">&laquo;</a></li>
+                <li class="page-item"><a class="page-link"
+                                         href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}">Назад</a>
+                </li>
+                {% endif %}
+
+                <span class="current">
+            <li class="page-item"><a
+                    class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link"
+                                         href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">Дальше</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
     <div class="footer">
         <p class="copyright" style="margin-bottom: 0; text-align: center;">&copy;Insure Brother</p>
         <p>Техподдержка: our.support@gmail.com</p>

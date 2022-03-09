@@ -1,16 +1,14 @@
 {% extends 'main/base.html' %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-<div class="main_welcome">
-    <h2>{{ heading }}</h2>
-    <form method="post">
-        {% csrf_token %}
-        <p>Вы действительно хотите удалить продукт " {{ object.name }} от {{ object.appearance_date }}"?</p>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-danger">Удалить</button>
-            <button type="button" class="btn btn-outline-primary"><a href="{% url 'accounts:profile' %}">Отмена</a>
-            </button>
-        </div>
-    </form>
-</div>
+<h2>{{ heading }}</h2>
+<form method="post">
+    {% csrf_token %}
+    <p>Вы действительно хотите удалить продукт " {{ object.name }} от {{ object.appearance_date }}"?</p>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <button type="button" class="btn btn-outline-primary"><a href="{% url 'accounts:profile' %}">Отмена</a>
+        </button>
+    </div>
+</form>
 {% endblock content %}

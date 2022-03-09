@@ -3,50 +3,49 @@
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
 <h2>{{ heading }}</h2>
-<div class="main_welcome">
-    <div class="main_center">
-        <div class="about_left" style="margin: auto; margin-top: 0; margin-right: 150px; ">
-            <img src='{% static "main/images/insurance-default-image.jpg" %}'
-                 style="width: 250px; height: 250px; border-radius: 50%;">
-        </div>
-        <div class="about_right">
-            <div class="profile_info">
+<div class="main_center">
+    <div class="about_left" style="margin: auto; margin-top: 0; margin-right: 150px; ">
+        <img src='{% static "main/images/insurance-default-image.jpg" %}'
+             style="width: 250px; height: 250px; border-radius: 50%;">
+    </div>
+    <div class="about_right">
+        <div class="profile_info">
 
-                <div class="list-group">
-                    <div class="list-group-item list-group-item-action" aria-current="true">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="">Название: {{ product_info.name }}</h5>
-                        </div>
-                    </div>
-                    <div class="list-group-item list-group-item-action" aria-current="true">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="">Цена: {{ product_info.price }}</h5>
-                        </div>
-                    </div>
-                    <div class="list-group-item list-group-item-action" aria-current="true">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="">Длительность: {{ product_info.duration_of_action }}</h5>
-                        </div>
-                    </div>
-                    <div class="list-group-item list-group-item-action" aria-current="true">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="">Компания: {{ product_info.company_key }}</h5>
-                        </div>
-                    </div>
-                    <div class="list-group-item list-group-item-action" aria-current="true">
-                        <div class="d-flex w-100 justify-content-between">
-                            <button type="button" class="btn btn-outline-success justify-content-between d-flex" style="width: 135px; height: 60px;
-margin-top: 20px; margin: 0 auto;" onclick="window.location.href='{% url 'main:create_message' product_info.pk %}'">Оставить заявку
-                            </button>
-                        </div>
+            <div class="list-group">
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="">Название: {{ product_info.name }}</h5>
                     </div>
                 </div>
-
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="">Цена: {{ product_info.price }}</h5>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="">Длительность: {{ product_info.duration_of_action }}</h5>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="">Компания: {{ product_info.company_key }}</h5>
+                    </div>
+                </div>
+                <div class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <button type="button" class="btn btn-outline-success justify-content-between d-flex" style="width: 135px; height: 60px;
+margin-top: 20px; margin: 0 auto;" onclick="window.location.href='{% url 'main:create_message' product_info.pk %}'">
+                            Оставить заявку
+                        </button>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
-
-    <h3>О продукте:</h3>
-    <p style="text-align: center;">{{ product_info.about_product }}</p>
 </div>
+
+<h3>О продукте:</h3>
+<p style="text-align: center;">{{ product_info.about_product }}</p>
 {% endblock %}
