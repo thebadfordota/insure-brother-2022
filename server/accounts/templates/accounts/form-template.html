@@ -3,14 +3,12 @@
 {% load crispy_forms_tags %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-<div class="main_welcome">
-    <div class="container">
-            <h2>{{ heading }}</h2>
-            <form action="" method="POST" style="margin: 0 auto;" class="uniForm blueForms" id="id-exampleForm">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <input type="submit" class="btn btn-primary" value="Подтвердить">
-            </form>
-    </div>
+<div class="container">
+    <h2>{{ heading }}</h2>
+    <form action="" method="POST" style="margin: 0 auto;" class="uniForm blueForms" id="id-exampleForm">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-primary" value="Подтвердить">
+    </form>
 </div>
 {% endblock %}

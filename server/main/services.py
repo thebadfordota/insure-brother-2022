@@ -1,14 +1,15 @@
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from .documents import ProductDocument
 
 
 class ProductFilterServices:
     """
     Данный класс реализует фильтрацию полей таблицы 'Product'.
     """
-    def __init__(self, form, product_info):
+    def __init__(self, form):
         self.form = form
-        self.product_info = product_info
+        self.product_info = ProductDocument.search()
 
     def get_filtered_fields(self):
         if self.form.is_valid():
@@ -22,7 +23,7 @@ class ProductFilterServices:
                                                             appearance_date=self.form.cleaned_data['appearance_date'])
             if self.form.cleaned_data['product_name']:
                 self.product_info = self.product_info.query("match", name=self.form.cleaned_data['product_name'])
-        return self.product_info.to_queryset()
+        return self.product_info.to_queryset().filter(is_published=True)
 
 
 class SendEmailServices:

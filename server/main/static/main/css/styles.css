@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Ubuntu&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin');
 
+:root{
+    --color-aqua: aqua;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -219,10 +223,10 @@ header {
     font-size: 16px;
 }
 
-/*.form-control{*/
-/*    margin: auto;*/
-/*    margin-right: 10px;*/
-/*    margin-left: 10px;*/
-/*    width: auto;*/
-/*    font-size: 17px;*/
-/*}*/
+/* Pagination */
+
+.main_pagination{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}

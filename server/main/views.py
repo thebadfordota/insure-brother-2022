@@ -1,9 +1,7 @@
-from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, ListView
 from .models import ClientMessage, Product
 from .forms import ClientMessageForm, ProductFilterForm
 from .services import ProductFilterServices
-from .documents import ProductDocument
 from .tasks import send_user_info
 from accounts.services import CountViewsServices
 
@@ -12,27 +10,20 @@ class ProductListView(ListView):
     """
     View для отображения списка продуктов.
     """
+    paginate_by = 6
     model = Product
     template_name = "main/index.html"
     context_object_name = "product_info"
 
+    def get_queryset(self):
+        return ProductFilterServices(ProductFilterForm(self.request.GET)).get_filtered_fields()  # ElasticSearch
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = ProductFilterForm(self.request.POST)
+        context['form'] = ProductFilterForm(self.request.GET)
         context['title'] = 'Все предложения'
         context['heading'] = 'Все предложения'
         return context
-
-    def post(self, request, *args, **kwargs):
-        # context = self.get_context_data()  # Не получается унаследовать старый 'context'
-        form = ProductFilterForm(request.POST)
-        product_info = ProductDocument.search()
-        product_info = ProductFilterServices(form, product_info).get_filtered_fields()
-        context = {'product_info': product_info, 'form': form, 'title': 'Все предложения', 'heading': 'Все предложения'}
-        return render(request, self.template_name, context)
-
-    def get_queryset(self):
-        return Product.objects.filter(is_published=True)
 
 
 class ShowProductDetailView(DetailView):
@@ -53,7 +44,7 @@ class ShowProductDetailView(DetailView):
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
         product_info = Product.objects.get(pk=self.kwargs["pk"])
-        CountViewsServices().increase_count_views(int(self.kwargs["pk"]), product_info.name)
+        CountViewsServices(int(self.kwargs["pk"])).increase_count_views(product_info.name)  # Mongo
         return response
 
 

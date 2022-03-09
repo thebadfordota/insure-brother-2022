@@ -8,62 +8,85 @@
           shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css"
-          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/all.css' %}"/>
     <link rel="stylesheet" href="{% static 'main/css/styles.css' %}"/>
     <link rel="shortcut icon" href="{% static 'main/images/python.ico' %}" type="image/x-icon">
-    <script src="{%  static 'main/js/jquery-3.6.0.js' %}"></script>
 </head>
 <body>
 <div class="page">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="{% url 'main:home' %}">Insure <span style="color: aqua">Brother</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:home' %}">Все предложения</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            {% if not user.is_authenticated %}
-                            <a class="dropdown-item" href="{% url 'accounts:login' %}">Войти</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'accounts:register' %}">Зарегистрироваться</a>
-                            {% endif %}
-                            {% if user.is_authenticated %}
-                            <a class="dropdown-item" href="{% url 'accounts:profile' %}">Профиль</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'accounts:logout' %}">Выйти</a>
-                            {% endif %}
-                        </div>
-                    </li>
-                </ul>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand " href="{% url 'main:home' %}" style="color: white">Insure <span
+                        style="color: aqua">Brother</span></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'main:home' %}">Все предложения</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
+                                {% if not user.is_authenticated %}
+                                <a class="dropdown-item" href="{% url 'accounts:login' %}">Войти</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'accounts:register' %}">Зарегистрироваться</a>
+                                {% endif %}
+                                {% if user.is_authenticated %}
+                                <a class="dropdown-item" href="{% url 'accounts:profile' %}">Профиль</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'accounts:logout' %}">Выйти</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
-    {% block content %}{% endblock %}
+    <div class="main_welcome">
+        {% block content %}{% endblock %}
+        {% if page_obj.has_other_pages %}
+        <nav aria-label="Page navigation example" class="main_pagination">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?{{ request.GET.urlencode }}&page=1">&laquo;</a></li>
+                <li class="page-item"><a class="page-link"
+                                         href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}">Назад</a>
+                </li>
+                {% endif %}
+
+                <span class="current">
+            <li class="page-item"><a
+                    class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</a></li>
+        </span>
+
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link"
+                                         href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">Дальше</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
     <div class="footer">
         <p class="copyright" style="margin-bottom: 0; text-align: center;">&copy;Insure Brother</p>
         <p>Техподдержка: our.support@gmail.com</p>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+<script src="{% static 'main/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
