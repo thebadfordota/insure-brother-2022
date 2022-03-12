@@ -5,6 +5,7 @@ services:
     hostname: web
     build: .
     command: python manage.py runserver 0.0.0.0:8000
+    restart: on-failure
     volumes:
       - .:/code
     ports:
@@ -19,6 +20,7 @@ services:
     container_name: db
     hostname: db
     image: postgres:12.0-alpine
+    restart: on-failure
     env_file:
       - ./.env.dev
     volumes:
@@ -27,6 +29,7 @@ services:
     container_name: rabbit
     hostname: rabbit
     image: rabbitmq:3.8.19-management
+    restart: on-failure
     env_file:
       - ./.env.dev
     ports:
@@ -37,6 +40,7 @@ services:
     hostname: celery
     build: .
     command: celery -A server worker -l INFO
+    restart: on-failure
     volumes:
       - .:/code
     env_file:
@@ -48,6 +52,7 @@ services:
     hostname: celery-beat
     build: .
     command: celery -A server beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    restart: on-failure
     volumes:
       - .:/code
     env_file:
@@ -58,6 +63,7 @@ services:
     container_name: es
     hostname: es
     image: elasticsearch:7.8.1
+    restart: on-failure
     environment:
       - discovery.type=single-node
     ports:
@@ -65,6 +71,7 @@ services:
   mongo:
     image: mongo:5.0.2
     container_name: mongo
+    restart: on-failure
     hostname: mongo
     env_file:
       - ./.env.dev
