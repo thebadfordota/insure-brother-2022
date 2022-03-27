@@ -6,6 +6,10 @@ class ClientMessageForm(forms.ModelForm):
     """
     Форма для заявки на продукт компании.
     """
+    def __init__(self, *args, **kwargs):
+        super(ClientMessageForm, self).__init__(*args, **kwargs)
+        self.fields['product_key'].widget = forms.HiddenInput()
+
     class Meta:
         model = ClientMessage
         fields = ['last_name', 'first_name', 'patronymic', 'phone', 'email', 'product_key', 'appearance_date']
